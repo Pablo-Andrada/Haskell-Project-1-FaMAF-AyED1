@@ -107,5 +107,66 @@ todosEnYs [11, 2, 5, 8] [2, -3, 11, 5, 8] -- Resultado: True
 todosIguales [11, 2, 5, 8] -- Resultado: False
 todosIguales [11, 11, 11, 11] -- Resultado: True
 
-
 -}
+
+{-
+Laboratorio 4 A partir de las expresiones en el ejercicio 7
+a) Identific ́a las variables libres de cada expresi ́on y el tipo de cada una.
+7.a) Producto de los enteros desde 1 hasta n
+                ⟨∏i:1≤i≤n:i⟩
+- Variables libres: n es un entero (Int)
+- Significado: Calcula el producto de todos los números enteros desde 1 hasta n.
+
+7.b) Promedio de los elementos de xs
+                ⟨∑i:0≤i<#xs:xs.i⟩ / #xs
+- Variables libres: xs es una lista de enteros [Int].
+- Significado: Calcula el promedio (truncado a entero) de los elementos de la lista xs.​
+
+7.c) Comparación entre el máximo de xs y el mínimo de ys
+            ⟨Maxi:0≤i<#xs:xs.i⟩<⟨Mini:0≤i<#ys:ys.i⟩
+- Variables libres: xs y ys son listas de enteros [Int].
+- Significado: Verifica si el máximo valor en la lista xs es menor que el mínimo valor en la lista ys.
+
+7.d) Existencia de índices i y j cuyo producto es n
+                ⟨∃i,j:(2≤i<n)∧(2≤j<n):i×j=n⟩
+- Variables libres: n es un entero (Int).
+- Significado: Verifica si existen dos índices i y j entre 2 y n-1 tales que su producto es igual a n.
+-}
+--b) Definí funciones que tomen como argumento las variables libres identificadas y devuelvan el resultado de la expresión. Atención: Tené en cuenta que en algunos casos es necesario definir varias funciones.
+
+--7.a) Producto de los enteros desde 1 hasta n
+productoHastaN :: Int -> Int
+productoHastaN n = product [1..n]
+
+--7.b) Promedio de los elementos de xs
+promedio' :: [Int] -> Int
+promedio' xs = sum xs `div` length xs
+
+--7.c) Comparación entre el máximo de xs y el mínimo de ys
+maxMenorQueMin :: [Int] -> [Int] -> Bool
+maxMenorQueMin xs ys = maximum xs < minimum ys
+
+--7.d) Existencia de índices i y j cuyo producto es n
+--existeProductoIgualA :: Int -> Bool
+--existeProductoIgualA n = or [i * j == n | i <- [2..n-1], j <- [2..n-1]]
+
+-- Función auxiliar que verifica si existe un `j` tal que `i * j == n`, con `j` en el rango `[2..n-1]`
+existeMultiplicadorRec :: Int -> Int -> Int -> Bool
+existeMultiplicadorRec i j n
+  | j >= n    = False            -- Caso base: si `j` es igual o mayor que `n`, no encontramos solución
+  | i * j == n = True            -- Caso en el que `i * j` es igual a `n`, encontramos solución
+  | otherwise = existeMultiplicadorRec i (j + 1) n -- Continuamos con el siguiente `j`
+
+-- Función principal que verifica si existe algún par `(i, j)` tal que `i * j == n`, con `i` en el rango `[2..n-1]`
+existeProductoIgualARec :: Int -> Int -> Bool
+existeProductoIgualARec i n
+  | i >= n    = False                           -- Caso base: si `i` es igual o mayor que `n`, no encontramos solución
+  | existeMultiplicadorRec i 2 n = True         -- Si encontramos un `j` tal que `i * j == n`, retornamos `True`
+  | otherwise = existeProductoIgualARec (i + 1) n -- Continuamos con el siguiente `i`
+
+-- Función para verificar si existe algún par `(i, j)` tal que `i * j == n`, comenzando con `i = 2`
+existeProductoIgualA :: Int -> Bool
+existeProductoIgualA n = existeProductoIgualARec 2 n
+
+--c) Evaluá las funciones tomando como argumento los valores señalados en el ejercicio 8.
+
