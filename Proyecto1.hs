@@ -243,14 +243,21 @@ Explicación: Esta expresión calcula el producto de todos los elementos pares e
 Parte b) Definición de función
 Para calcular el producto de los elementos pares en xs, podemos filtrar los elementos pares y luego calcular su producto.
 -}
-productoPares :: [Int] -> Int
-productoPares xs = product [x | x <- xs, even x]
-{-
-Explicación:
+-- Función que filtra los números pares de una lista
+esPar' :: [Int] -> [Int]
+esPar' xs = [x | x <- xs, even x]
 
-Usamos una lista por comprensión para seleccionar solo los elementos pares de xs (even x).
-Calculamos el producto de estos elementos pares con la función product.
--}
+productoPares :: [Int] -> Int
+productoPares xs = product (esPar' xs)
+
+
+--productoPares :: [Int] -> Int
+--productoPares xs = ()
+
+--productoPares :: [Int] -> Int
+--productoPares xs = product [x | x <- xs, even x]
+
+
 {-
 Ejercicio 11d: Suma de los elementos en posición par de xs
 Parte a) Identificación de variables libres y tipos
@@ -262,12 +269,10 @@ Explicación: Esta expresión calcula la suma de los elementos en xs que están 
 Parte b) Definición de función
 Para obtener la suma de los elementos en posición par, necesitamos tomar solo los elementos en índices pares y luego sumarlos.
 -}
-sumaPosicionesPares :: [Int] -> Int
-sumaPosicionesPares xs = sum [x | (x, i) <- zip xs [0..], even i]
-{-
-Explicación:
+-- Función que toma los elementos en posiciones pares de una lista
+elementosEnPosicionPar :: [Int] -> [Int]
+elementosEnPosicionPar xs = [x | (x, i) <- zip xs [0..], even i]
 
-Usamos zip xs [0..] para combinar cada elemento x de xs con su índice i.
-En la lista por comprensión, seleccionamos solo aquellos elementos donde el índice i es par (even i).
-Finalmente, sumamos los elementos seleccionados con sum.
--}
+-- Función que suma los elementos en posiciones pares de una lista usando elementosEnPosicionPar
+sumaElementosEnPosicionPar :: [Int] -> Int
+sumaElementosEnPosicionPar xs = sum (elementosEnPosicionPar xs)
