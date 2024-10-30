@@ -206,4 +206,68 @@ todos (x:xs) = x == True && todos xs
 --todos [True,True]     -- True
 --todos [True,False]    -- False
 
+-- Laboratorio 6 A partir de las expresiones del ejercicio anterior b) y c y d)
+{- a) Identificá las variables libres de cada expresión y el tipo de cada una.
+b) Definí funciones que tomen como argumento las variables libres identificadas y devuelvan el resultado de la
+expresión. Atención: Tené en cuenta que en algunos casos es necesario definir varias funciones.
 
+Ejercicio 11b: n es el elemento más grande de xs
+Parte a) Identificación de variables libres y tipos
+Variables libres:
+
+-n: entero (Int)
+-xs: lista de enteros ([Int])
+Explicación: Esta expresión verifica si el valor n es el máximo valor en la lista xs.
+
+Parte b) Definición de función
+Para verificar si n es el elemento más grande de xs, necesitamos comparar n con el máximo de xs.
+
+-}
+esMaximo :: Int -> [Int] -> Bool
+esMaximo n xs = n == maximum xs
+
+{-
+Explicación:
+
+Usamos la función maximum de Haskell para obtener el valor máximo de la lista xs.
+Luego, comparamos n con este valor máximo. Si son iguales, n es el elemento más grande de xs.
+-}
+{-
+Ejercicio 11c: Producto de los elementos pares de xs
+Parte a) Identificación de variables libres y tipos
+Variables libres:
+
+xs: lista de enteros ([Int])
+Explicación: Esta expresión calcula el producto de todos los elementos pares en la lista xs.
+
+Parte b) Definición de función
+Para calcular el producto de los elementos pares en xs, podemos filtrar los elementos pares y luego calcular su producto.
+-}
+productoPares :: [Int] -> Int
+productoPares xs = product [x | x <- xs, even x]
+{-
+Explicación:
+
+Usamos una lista por comprensión para seleccionar solo los elementos pares de xs (even x).
+Calculamos el producto de estos elementos pares con la función product.
+-}
+{-
+Ejercicio 11d: Suma de los elementos en posición par de xs
+Parte a) Identificación de variables libres y tipos
+Variables libres:
+
+xs: lista de enteros ([Int])
+Explicación: Esta expresión calcula la suma de los elementos en xs que están en posiciones pares (0, 2, 4, ...).
+
+Parte b) Definición de función
+Para obtener la suma de los elementos en posición par, necesitamos tomar solo los elementos en índices pares y luego sumarlos.
+-}
+sumaPosicionesPares :: [Int] -> Int
+sumaPosicionesPares xs = sum [x | (x, i) <- zip xs [0..], even i]
+{-
+Explicación:
+
+Usamos zip xs [0..] para combinar cada elemento x de xs con su índice i.
+En la lista por comprensión, seleccionamos solo aquellos elementos donde el índice i es par (even i).
+Finalmente, sumamos los elementos seleccionados con sum.
+-}
