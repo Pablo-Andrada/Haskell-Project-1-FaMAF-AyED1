@@ -169,4 +169,41 @@ existeProductoIgualA :: Int -> Bool
 existeProductoIgualA n = existeProductoIgualARec 2 n
 
 --c) Evaluá las funciones tomando como argumento los valores señalados en el ejercicio 8.
+{- Ahora evaluaremos estas funciones con los valores dados en el Ejercicio 8:
+  1-Para la función productoHastaN con n = 5:
+    productoHastaN 5 -- Resultado: 120
+
+  2-Para la función promedio con xs = [6, 9, 3, 9, 8]:
+    promedio [6, 9, 3, 9, 8] -- Resultado: 7
+
+  3-Para la función maxMenorQueMin con xs = [-3, 9, 8] y ys = [6, 7, 8]:
+    maxMenorQueMin [-3, 9, 8] [6, 7, 8] -- Resultado: False
+  
+  4-Para la función existeProductoIgualA con n = 5:
+    existeProductoIgualA 5 -- Resultado: False
+-}
+
+-- Definición de esPar
+esPar :: Int -> Bool
+esPar x = x `mod` 2 == 0
+
+-- Definición de algunof usando el tipo genérico `a`
+algunof :: (a -> Bool) -> [a] -> Bool
+algunof _ [] = False
+algunof f (x:xs) = f x || algunof f xs
+
+-- Ejemplos de uso
+-- Verifica si hay algún número par en la lista
+-- resultado1 = algunof esPar [1, 2, 3, 4] -- True
+-- resultado2 = algunof esPar [1, 3, 5]    -- False
+
+--Laboratorio 5 Implementá en Haskell la función que definiste en el ejercicio anterior (Ejercicio 10).
+todos:: [Bool] -> Bool
+todos [] = True
+todos (x:xs) = x == True && todos xs
+-- Ejemplos de uso
+--todos [False]         -- False
+--todos [True,True]     -- True
+--todos [True,False]    -- False
+
 
