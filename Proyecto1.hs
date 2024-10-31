@@ -276,3 +276,63 @@ elementosEnPosicionPar xs = [x | (x, i) <- zip xs [0..], even i]
 -- Función que suma los elementos en posiciones pares de una lista usando elementosEnPosicionPar
 sumaElementosEnPosicionPar :: [Int] -> Int
 sumaElementosEnPosicionPar xs = sum (elementosEnPosicionPar xs)
+
+--Laboratorio 7 Program ́a las funciones definidas en el ejercicio 27. Para definir los tipos en haskell lo pod ́es hacer de la siguiente manera:
+--a) paratodo’ :: [a] -> (a -> Bool) -> Bool
+--b) existe’ :: [a] -> (a -> Bool) -> Bool
+--c) sumatoria’ :: [a] -> (a -> Int) -> Int
+--d) productoria’ :: [a] -> (a -> Int) -> Int
+
+
+--a) paratodo’ :: [a] -> (a -> Bool) -> Bool, dada una lista xs de tipo [a] y un predicado t :: a -> Bool, determina si todos los elementos de xs satisfacen el predicado t.
+paratodo' :: [a] -> (a -> Bool) -> Bool
+paratodo' [] _ = True
+paratodo' (x:xs) predicado    | predicado x    = paratodo' xs predicado  
+                              | otherwise = False 
+
+-- *Main> paratodo' [5,4,4] esPositivo  
+-- True
+-- *Main> paratodo' [655,454,(-8)] esPositivo  
+-- False
+
+
+
+--b) existe’ :: [a] -> (a -> Bool) -> Bool, dada una lista xs de tipo [a] y un predicado t :: a -> Bool, determina si algún elemento de xs satisface el predicado t.
+existe' :: [a] -> (a -> Bool) -> Bool
+existe' [] _ = False  
+existe' (x:xs) predicado
+    | predicado x = True  
+    | otherwise   = existe' xs predicado  
+
+-- *Main> existe' [0,5,8,7] esCero 
+-- True
+-- *Main> existe' [5,8,7] esCero 
+-- False
+
+
+-- otra implementacion: 
+-- existe' :: [a] -> (a -> Bool) -> Bool
+-- existe'[] _ = False
+-- existe' (x:xs) fn = fn x || existe' xs fn
+
+--c) sumatoria’ :: [a] -> (a -> Int) -> Int, dada una lista xs de tipo [a] y una función t :: a -> Int (toma elementos de tipo a y devuelve enteros), calcula la suma de los valores que resultan de la aplicación de t a los elementos de xs.
+
+sumatoria' :: [a] -> (a -> Int) -> Int
+sumatoria' [] _ = 0 
+sumatoria' (x:xs) funcion = funcion x + sumatoria' xs funcion
+
+-- *Main> sumatoria' [1,3] factorial
+-- 7
+-- *Main> sumatoria' [4,5,0] factorial
+-- 145
+
+
+--d) productoria’ :: [a] -> (a -> Int) -> Int, dada una lista de xs de tipo [a] y una función t :: a -> Int, calcula el producto de los valores que resultan de la aplicación de t a los elementos de xs.
+productoria' :: [a] -> (a -> Int) -> Int
+productoria' [] _ = 1
+productoria' (x:xs) predicado = predicado x * productoria' xs predicado
+
+-- *Main> productoria' [2,(-2)] valorAbsoluto 
+-- 4
+-- *Main> productoria' [(-1515),(-2)] valorAbsoluto 
+-- 3030
