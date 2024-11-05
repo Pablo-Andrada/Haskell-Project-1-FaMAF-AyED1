@@ -6,7 +6,7 @@ esCero n = n == 0
 
 --2. esPositivo :: Int -> Bool, que verifica si un entero es estrictamente mayor a 0.
 esPositivo :: Int -> Bool
-esPositivo n = n > 0
+esPositivo n = n >= 0
 --3. esVocal :: Char -> Bool, que verifica si un caracter es una vocal en minúscula.
 esVocal :: Char -> Bool
 esVocal x = x == 'a' ||x == 'e' ||x == 'i' ||x == 'o' ||x == 'u'
@@ -277,7 +277,7 @@ elementosEnPosicionPar xs = [x | (x, i) <- zip xs [0..], even i]
 sumaElementosEnPosicionPar :: [Int] -> Int
 sumaElementosEnPosicionPar xs = sum (elementosEnPosicionPar xs)
 
---Laboratorio 7 Program ́a las funciones definidas en el ejercicio 27. Para definir los tipos en haskell lo pod ́es hacer de la siguiente manera:
+--Laboratorio 7 Programá las funciones definidas en el ejercicio 27. Para definir los tipos en haskell lo pod ́es hacer de la siguiente manera:
 --a) paratodo’ :: [a] -> (a -> Bool) -> Bool
 --b) existe’ :: [a] -> (a -> Bool) -> Bool
 --c) sumatoria’ :: [a] -> (a -> Int) -> Int
@@ -336,3 +336,57 @@ productoria' (x:xs) predicado = predicado x * productoria' xs predicado
 -- 4
 -- *Main> productoria' [(-1515),(-2)] valorAbsoluto 
 -- 3030
+
+{-
+Laboratorio 8 Teniendo en cuenta las funciones definidas en el Laboratorio 1 y en el Laboratorio 7, evalu ́a las
+expresiones como se muestra en el ejemplo.
+
+Ejemplos en ghci:
+$> pa ra t o d o ’ [ 0 , 0 , 0 , 0 ] e sC e r o
+True
+$> pa ra t o d o ’ [ 0 , 0 , 1 , 0 ] e sC e r o
+F a l s e
+$> pa ra t o d o ’ ” h o l a ” e sV o c a l
+F a l s e
+$> e x i s t e ’ [ 0 , 0 , 1 , 0 ] e sC e r o
+True
+$> e x i s t e ’ ” h o l a ” e sV o c a l
+True
+$> e x i s t e ’ ” t n t ” e sV o c a l
+F a l s e
+
+---Funciones del Lab 7 y Lab 1, evaluadas:
+ghci> paratodo' [0,0,3,0] esCero
+False 
+ghci> paratodo' [0,0,0,0] esCero
+True 
+ghci> paratodo' [0,87,3,10] esPositivo
+True
+ghci> paratodo' [(-1),87,3,10] esPositivo
+False
+ghci> paratodo' ['o','p','a'] esVocal
+False
+ghci> paratodo' ['o','e','a'] esVocal
+True
+ghci> existe' [0,1,2,3] esCero
+True
+ghci> existe' [4,1,2,3] esCero
+False
+ghci> existe' [4,1,2,3] esPositivo
+True
+ghci> existe' [(-3),1,2,3] esPositivo
+True
+ghci> existe' ['e','p','y','r'] esVocal
+True
+ghci> existe' ['w','p','y','r'] esVocal
+False
+ghci> sumatoria' [0,5,4,7] valorAbsoluto
+16
+ghci> sumatoria' [(-96),5,4,7] valorAbsoluto
+112
+ghci> productoria' [(-96),5,4,7] valorAbsoluto
+13440
+ghci> productoria' [(-96),5,4,0] valorAbsoluto
+0
+-}
+
